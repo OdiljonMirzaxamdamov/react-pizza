@@ -15,11 +15,12 @@ export const Home = () => {
             .then((arr) => {
                 setItems(arr)
                 setIsLoading(!isLoading)
-            })
+            });
+        window.scrollTo(0, 0); //делает скролл вверх при открытии страницы основной страницы
     }, []);
 
     return (
-        <>
+        <div className="container">
             <div className="content__top">
                 <Categories/>
                 <Sort/>
@@ -30,7 +31,7 @@ export const Home = () => {
                     <PizzaBlock
                         key={obj.id} {...obj} />)}
             </div>
-        </>
+        </div>
     )
 }
 

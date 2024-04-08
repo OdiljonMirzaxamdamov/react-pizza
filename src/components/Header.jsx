@@ -11,7 +11,6 @@ function Header() {
                         <div>
                             <h1>React Pizza</h1>
                             <p>самая вкусная пицца во вселенной</p>
-                            <input type="text"/>
                         </div>
                     </div>
                 </Link>
