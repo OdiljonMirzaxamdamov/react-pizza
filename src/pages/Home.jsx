@@ -17,25 +17,21 @@ export const Home = ({ searchValue }) => {
         setIsLoading(true)
 
         const category = categoryId > 0 ? `category=${categoryId}` : '';
-        const sortBy = sortType.sortProperty;
+        const sortBy = `&sortBy=${sortType.sortProperty}`;
+        const search = searchValue ? `&title=*${searchValue}` : '';
 
-        fetch(`https://17d2006fd5b63307.mokky.dev/items?${category}&sortBy=${sortBy}`)
+        fetch(`https://17d2006fd5b63307.mokky.dev/items?${category}${search}${sortBy}`)
             .then((res) => res.json())
             .then((arr) => {
                 setItems(arr)
                 setIsLoading(false)
             });
         window.scrollTo(0, 0); //делает скролл вверх при открытии страницы основной страницы
-    }, [categoryId, sortType]);
+    }, [categoryId, sortType, searchValue]);
 
 
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
-    const pizzas = items.filter((obj) => {
-        if(obj.title.toLowerCase().includes(searchValue)) {
-            return true
-        }
-        return false
-    }).map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+    const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
 
 
     return (
