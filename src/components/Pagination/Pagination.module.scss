@@ -1,0 +1,44 @@
+.root {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0 5rem;
+
+
+
+  li a {
+    border-radius: 15px;
+    padding: 0.1rem 1rem;
+    border: tomato 1px solid;
+    color: tomato;
+    cursor: pointer;
+  }
+
+  :global {
+    .previous a,
+    .next a,
+    .break a {
+      border-color: tomato;
+
+    }
+
+    .selected a {
+      border: tomato 1px solid;
+      background-color: tomato;
+      color: white;
+      min-width: 32px;
+    }
+
+    .disabled a {
+      color: tomato;
+    }
+
+    .disable,
+    .disabled a {
+      cursor: default;
+    }
+  }
+}
+
