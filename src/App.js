@@ -12,13 +12,15 @@ import NotFound from "./components/NotFoundBlock";
 
 
 function App() {
+    const [searchValue, setSearchValue] = React.useState('');
+
     return (
         <div className="wrapper">
-            <Header />
+            <Header searchValue={searchValue} setSearchValue={setSearchValue} />
             <div className="content">
 
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/" element={<Home searchValue={searchValue} />} />
                         <Route path="/cart" element={<Cart />} />
                         <Route path="/cart-empty" element={<CartEmpty />} />
                         <Route path="*" element={<NotFound />} />
