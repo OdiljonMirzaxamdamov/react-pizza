@@ -6,13 +6,13 @@ import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import {SearchContext} from "../App";
 
-import { useSelector, useDispatch } from 'react-redux'
-import { setCategoryId } from "../redux/slices/filterSlice";
+import { useSelector } from 'react-redux'
+// import { setCategoryId } from "../redux/slices/filterSlice";
 
 export const Home = () => {
-    const dispatch = useDispatch()
-    const categoryId = useSelector((state) => state.filter.categoryId)
-    const sortType = useSelector((state) => state.filter.sort)
+    // const dispatch = useDispatch()
+    const { categoryId, sort } = useSelector((state) => state.filter);
+    // const sortType = useSelector((state) => state.filter.sort)
 
     const {searchValue} = React.useContext(SearchContext);
     const [items, setItems] = React.useState([]);
@@ -24,7 +24,7 @@ export const Home = () => {
         setIsLoading(true)
 
         const category = categoryId > 0 ? `&category=${categoryId}` : '';
-        const sortBy = `&sortBy=${sortType.sortProperty}`;
+        const sortBy = `&sortBy=${sort.sortProperty}`;
         const search = searchValue ? `&title=*${searchValue}` : '';
         const pagination = `page=${currentPage}&limit=4`;
 
@@ -35,7 +35,7 @@ export const Home = () => {
                 setIsLoading(false)
             });
         window.scrollTo(0, 0); //делает скролл вверх при открытии страницы основной страницы
-    }, [categoryId, sortType, searchValue, currentPage]);
+    }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
 
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
@@ -44,7 +44,7 @@ export const Home = () => {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories value={categoryId} onChangeCategory={(id) => dispatch(setCategoryId(id))} />
+                <Categories />
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
