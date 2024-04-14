@@ -30,7 +30,6 @@ export const Home = () => {
 
         axios.get(`https://17d2006fd5b63307.mokky.dev/items?${pagination}${category}${search}${sortBy}`)
             .then((resMetaPagination) => {
-                console.log(resMetaPagination)
                 setItems(resMetaPagination.data.items)
                 setIsLoading(false)
             });
