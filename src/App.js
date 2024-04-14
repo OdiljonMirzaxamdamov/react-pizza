@@ -1,7 +1,5 @@
 import React from "react";
-import {Route, Routes} from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
-import {decrement, increment} from "./redux/slices/filterSlice";
+import { Route, Routes } from "react-router-dom";
 
 import './App.css';
 import './scss/app.scss'
@@ -16,9 +14,6 @@ export const SearchContext = React.createContext();
 
 function App() {
     const [searchValue, setSearchValue] = React.useState('');
-
-    const count = useSelector((state) => state.counter.value)
-    const dispatch = useDispatch()
 
     return (
         <div className="wrapper">
