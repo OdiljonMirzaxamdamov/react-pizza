@@ -12,12 +12,10 @@ import Pagination from "../components/Pagination";
 
 
 export const Home = () => {
-    const { categoryId, sort } = useSelector((state) => state.filter);
-
-    const {searchValue} = React.useContext(SearchContext);
+    const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
+    const { searchValue } = React.useContext(SearchContext);
     const [items, setItems] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
-    const [currentPage, setCurrentPage] = React.useState(1);
 
 
     React.useEffect(() => {
@@ -48,7 +46,7 @@ export const Home = () => {
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">{isLoading ? skeleton : pizzas}</div>
-            <Pagination onChangePage={setCurrentPage} />
+            <Pagination />
         </div>
     )
 }
