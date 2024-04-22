@@ -4,7 +4,7 @@ import Search from "./Search";
 import { useSelector } from "react-redux";
 
 function Header() {
-    const { items, totalPrice, totalItems } = useSelector(state => state.cart)
+    const { totalPrice, totalItems } = useSelector(state => state.cart)
 
     return (
         <div className="header">

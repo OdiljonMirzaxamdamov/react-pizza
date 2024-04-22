@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 import logoNotFound from '../assets/img/empty-cart.png'
 
@@ -13,9 +14,9 @@ export const CartEmpty = () => {
                 Для того, чтобы заказать пиццу, перейди на главную страницу.
             </p>
             <img src={logoNotFound} alt="Empty cart"/>
-            <a href="/" className="button button--black">
+            <Link to="/" className="button button--black">
                 <span>Вернуться назад</span>
-            </a>
+            </Link>
         </div>
     )
 }
