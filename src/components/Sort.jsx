@@ -23,8 +23,9 @@ function Sort() {
     React.useEffect(() => {
        const handleClickOutside = (event) => {
            if (event.target.offsetParent !== sortRef.current) {
-               setOpen(!open)
+               setOpen(false)
            }
+           console.log(event)
        }
 
        document.body.addEventListener("click", handleClickOutside);

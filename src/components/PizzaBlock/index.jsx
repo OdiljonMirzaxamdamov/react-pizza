@@ -1,13 +1,28 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {addItem} from "../../redux/slices/cartSlice";
 
-function PizzaBlock(props) {
-    const typeNames = ["тонкое", "традиционное", "легендарное"];
+const typeNames = ["тонкое", "традиционное", "легендарное"];
+
+function PizzaBlock( {id, title, price, imageUrl, types, sizes} ) {
+    const dispatch = useDispatch();
 
     const [pizzaCount, setPizzaCount] = React.useState(0);
     const [activePizzaType, setActivePizzaType] = React.useState(0);
     const [activePizzaSize, setActivePizzaSize] = React.useState(0);
 
-    const onClickAdd = () => {
+
+    const onClickAddCart = () => {
+        const item = {
+            id,
+            title,
+            price,
+            imageUrl,
+            type: typeNames[activePizzaType],
+            size: activePizzaSize
+        };
+        dispatch(addItem(item))
+
         setPizzaCount(pizzaCount + 1);
     }
 
@@ -16,20 +31,20 @@ function PizzaBlock(props) {
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src={props.imageUrl}
+                src={imageUrl}
                 alt="Pizza"
             />
-            <h4 className="pizza-block__title">{props.title}</h4>
+            <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                 <ul>
-                    {props.types.map((pizzaType) => (
+                    {types.map((pizzaType) => (
                         <li key={pizzaType} onClick={() => setActivePizzaType(pizzaType)} className={activePizzaType === pizzaType ? "active" : ''}>
                             {typeNames[pizzaType]}
                         </li>
                     ))}
                 </ul>
                 <ul>
-                    {props.sizes.map((pizzaSize, indexSize) => (
+                    {sizes.map((pizzaSize, indexSize) => (
                         <li key={pizzaSize} onClick={() => setActivePizzaSize(indexSize)} className={activePizzaSize === indexSize ? "active" : ''}>
                             {pizzaSize} см.
                         </li>
@@ -37,8 +52,8 @@ function PizzaBlock(props) {
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от {props.price} ₽</div>
-                <button onClick = {onClickAdd} className="button button--outline button--add">
+                <div className="pizza-block__price">от {price} ₽</div>
+                <button onClick = {onClickAddCart} className="button button--outline button--add">
                     <svg
                         width="12"
                         height="12"
