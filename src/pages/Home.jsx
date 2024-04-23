@@ -26,7 +26,7 @@ export const Home = () => {
     const [isLoading, setIsLoading] = React.useState(true);
 
 
-    const fetchPizzas = () => {
+    const fetchPizzas = async () => {
         setIsLoading(true)
 
         const category = categoryId > 0 ? `&category=${categoryId}` : '';
@@ -34,11 +34,9 @@ export const Home = () => {
         const search = searchValue ? `&title=*${searchValue}` : '';
         const pagination = `page=${currentPage}&limit=4`;
 
-        axios.get(`https://17d2006fd5b63307.mokky.dev/items?${pagination}${category}${search}${sortBy}`)
-            .then((resMetaPagination) => {
-                setItems(resMetaPagination.data.items)
-                setIsLoading(false)
-            });
+        const resMetaPagination = await axios.get(`https://17d2006fd5b63307.mokky.dev/items?${pagination}${category}${search}${sortBy}`)
+        setItems(resMetaPagination.data.items)
+        setIsLoading(false)
     };
 
 

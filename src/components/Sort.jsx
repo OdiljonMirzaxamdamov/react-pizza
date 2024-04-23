@@ -25,7 +25,6 @@ function Sort() {
            if (event.target.offsetParent !== sortRef.current) {
                setOpen(false)
            }
-           console.log(event)
        }
 
        document.body.addEventListener("click", handleClickOutside);
