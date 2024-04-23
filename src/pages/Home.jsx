@@ -34,9 +34,19 @@ export const Home = () => {
         const search = searchValue ? `&title=*${searchValue}` : '';
         const pagination = `page=${currentPage}&limit=4`;
 
-        const resMetaPagination = await axios.get(`https://17d2006fd5b63307.mokky.dev/items?${pagination}${category}${search}${sortBy}`)
-        setItems(resMetaPagination.data.items)
-        setIsLoading(false)
+        try {
+            const resMetaPagination = await axios.get(
+                `https://17d2006fd5b63307.mokky.dev/items?${pagination}${category}${search}${sortBy}`
+            ); console.log(resMetaPagination)
+            setItems(resMetaPagination.data.items);
+        }
+        catch (error) {
+            console.log('ERROR', error);
+            alert('Ошибка при получении пицц из бэкэнда');
+        }
+        finally {
+            setIsLoading(false);
+        }
     };
 
 
