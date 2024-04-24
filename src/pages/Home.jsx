@@ -12,6 +12,7 @@ import Sort, {sortList} from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
+import HomeEmpty from "./Home-empty";
 
 
 export const Home = () => {
@@ -32,14 +33,7 @@ export const Home = () => {
         const search = searchValue ? `&title=*${searchValue}` : '';
         const pagination = `page=${currentPage}&limit=4`;
 
-        dispatch(
-            fetchPizzas({
-                category,
-                sortBy,
-                search,
-                pagination
-            }),
-        );
+        dispatch(fetchPizzas({ category, sortBy, search, pagination }));
 
         window.scrollTo(0, 0);
     };
@@ -62,7 +56,6 @@ export const Home = () => {
         if (window.location.search) {
             fetchPizzas();
         };
-
     }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
 
@@ -78,12 +71,7 @@ export const Home = () => {
             const params = qs.parse(window.location.search.substring(1));
             const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty);
 
-            dispatch(
-                setFilters({
-                    ...params,
-                    sort,
-                }),
-            );
+            dispatch(setFilters({...params, sort,}),);
 
             isSearch.current = true;
         }
@@ -100,7 +88,7 @@ export const Home = () => {
                 <Sort />
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>
+            {status === 'error' ? <HomeEmpty /> : <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>}
             <Pagination />
         </div>
     )

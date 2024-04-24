@@ -20,12 +20,12 @@ const pizzaSlice = createSlice({
     name: 'pizza',
     initialState,
 
-    reducers: {
-        setItems: (state, action) => {
-            state.items = action.payload
-        },
-
-    },
+    // reducers: {
+    //     setItems: (state, action) => {
+    //         state.items = action.payload
+    //     },
+    //
+    // },
 
     extraReducers: (builder) => {
         builder
@@ -49,6 +49,6 @@ const pizzaSlice = createSlice({
 
 
 
-export const { setItems } = pizzaSlice.actions
+// export const { setItems } = pizzaSlice.actions
 
 export default pizzaSlice.reducer
