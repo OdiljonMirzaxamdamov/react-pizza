@@ -1,6 +1,6 @@
 import React from "react";
 import qs from 'qs';
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 
 import { useDispatch, useSelector } from 'react-redux'; // Это у нас подключение категорий и сортировки с помощью Редакса
@@ -77,7 +77,12 @@ export const Home = () => {
 
 
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
-    const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+    // тут прикрутил Link для открытия попапа подробной инфы пиццы, это делается через реакт-роутек, хук useParams
+    // здесь мы получаем "/pizza/:id" и передаём его в App.js, дальше от туда передаём id в FullPizza.jsx
+    const pizzas = items.map((obj) =>
+        <Link key={obj.id} to={`/pizza/${obj.id}`}>
+            <PizzaBlock {...obj} />
+        </Link>);
 
     return (
         <div className="container">

@@ -7,8 +7,6 @@ function Header() {
     const { totalPrice, totalItems } = useSelector(state => state.cart)
     const location = useLocation();
 
-    console.log(location)
-    console.log(window.location)
 
     return (
         <div className="header">
