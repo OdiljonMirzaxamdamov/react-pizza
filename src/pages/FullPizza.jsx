@@ -1,12 +1,15 @@
 import React from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 
 // через path="/pizza/:id" внутри App.js подключаем динамические ссылки
 const FullPizza = () => {
     const [pizza, setPizza] = React.useState();
     const { id } = useParams();
+
+    //хук useNavigate это как dispatch, но только для роутера, он помогает перекидывать страницу
+    const navigate = useNavigate();
 
     //внутри useEffect нельзя использовать async/await, поэтому мы это делаем внутри обычно функции
     React.useEffect(() => {
@@ -16,6 +19,9 @@ const FullPizza = () => {
                 setPizza(data);
             } catch (error) {
                 alert('Ошибка при получении подробных данных пиццы!')
+
+                //тут имеется ввиду, что если будет error, то будет alert и переход на главную страницу при помощи navigate
+                navigate('/')
             }
         }
 
