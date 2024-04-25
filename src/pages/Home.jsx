@@ -2,7 +2,7 @@ import React from "react";
 import qs from 'qs';
 import { useNavigate } from "react-router-dom";
 
-import { SearchContext } from "../App"; // Это у нас подключение поиска с помощью юзКонтекста
+
 import { useDispatch, useSelector } from 'react-redux'; // Это у нас подключение категорий и сортировки с помощью Редакса
 import { setFilters } from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
@@ -21,10 +21,8 @@ export const Home = () => {
     const isSearch = React.useRef();
     const isMounted = React.useRef();
 
-    const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
+    const { categoryId, sort, currentPage, searchValue } = useSelector((state) => state.filter);
     const { items, status } = useSelector((state) => state.pizza);
-
-    const { searchValue } = React.useContext(SearchContext);
 
 
     const getPizzas = async () => {
