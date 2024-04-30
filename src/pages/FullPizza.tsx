@@ -5,7 +5,11 @@ import { useParams, useNavigate } from "react-router-dom";
 
 // через path="/pizza/:id" внутри App.js подключаем динамические ссылки
 const FullPizza = () => {
-    const [pizza, setPizza] = React.useState();
+    const [pizza, setPizza] = React.useState<{
+        imageUrl: string;
+        title: string;
+        price: number;
+    }>();
     const { id } = useParams();
 
     //хук useNavigate это как dispatch, но только для роутера, он помогает перекидывать страницу
@@ -25,7 +29,7 @@ const FullPizza = () => {
             }
         }
 
-        //эту функцию создали специально (чтобы внём использовать async/await) и запустили тут же
+        //эту функцию создали специально (чтобы в нём использовать async/await) и запустили тут же
         fetchPizzaPupup();
     }, []);
 
@@ -38,7 +42,7 @@ const FullPizza = () => {
         <div className="container--empty">
             <img src={pizza.imageUrl} />
             <h2> {pizza.title} 😬</h2>
-            <h4> {pizza.price} </h4>
+            <h4> {pizza.price} P</h4>
         </div>
     )
 }

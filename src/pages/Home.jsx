@@ -2,7 +2,6 @@ import React from "react";
 import qs from 'qs';
 import {Link, useNavigate} from "react-router-dom";
 
-
 import { useDispatch, useSelector } from 'react-redux'; // Это у нас подключение категорий и сортировки с помощью Редакса
 import { setFilters } from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
