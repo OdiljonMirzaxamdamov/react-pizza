@@ -1,9 +1,14 @@
 import React from "react";
-
 import { useSelector, useDispatch } from 'react-redux'
 import { setSortType } from "../redux/slices/filterSlice";
 
-export const sortList = [
+
+type SortItem = {
+    name: string;
+    sortProperty: string;
+}
+
+export const sortList: SortItem[] = [
     {name: 'популярности (по возрастанию)', sortProperty: 'rating'},
     {name: 'популярности (по убыванию)', sortProperty: '-rating'},
     {name: 'цене (по возрастанию)', sortProperty: 'price'},
@@ -12,16 +17,26 @@ export const sortList = [
     {name: 'алфавиту (по убыванию)', sortProperty: '-title'},
 ]
 
-function Sort() {
+interface RootState {
+    filter: {
+        sort: {
+            name: string;
+            sortProperty: string;
+        },
+    };
+}
+
+const Sort: React.FC = () => {
     const [open, setOpen] = React.useState(false);
 
     const dispatch = useDispatch();
-    const sortType = useSelector((state) => state.filter.sort);
-    const sortRef = React.useRef();
+    const sortType = useSelector((state: RootState) => state.filter.sort);
+    //чтобы было понятно sortRef это на самом деле ссылка на какой-то див в данном примере
+    const sortRef = React.useRef(null);
 
 
     React.useEffect(() => {
-       const handleClickOutside = (event) => {
+       const handleClickOutside = (event: any) => {
            if (event.target.offsetParent !== sortRef.current) {
                setOpen(false)
            }

@@ -4,9 +4,17 @@ import styles from "./Pagination.module.scss";
 import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentPage } from "../../redux/slices/filterSlice";
 
-const Pagination = () => {
+
+interface RootState {
+    filter: {
+        currentPage: number;
+    };
+}
+
+
+const Pagination: React.FC = () => {
     const dispatch = useDispatch()
-    const currentPage = useSelector((state) => state.filter.currentPage)
+    const currentPage = useSelector((state: RootState) => state.filter.currentPage)
 
     return (
         <>

@@ -1,9 +1,10 @@
+import React from "react";
 import {Link} from "react-router-dom";
 
 import logoNotFound from '../assets/img/empty-cart.png'
 
 
-export const CartEmpty = () => {
+const CartEmpty: React.FC = () => {
 
     return (
         <div className="cart cart--empty">

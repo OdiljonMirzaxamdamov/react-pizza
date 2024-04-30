@@ -1,12 +1,19 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Search from "./Search";
 import logoSvg from '../assets/img/pizza-logo.svg'
 
+interface RootState {
+    cart: {
+        totalPrice: number;
+        totalItems: number;
+    };
+}
 
-function Header() {
-    const { totalPrice, totalItems } = useSelector(state => state.cart)
+const Header: React.FC = () => {
+    const { totalPrice, totalItems } = useSelector((state: RootState) => state.cart)
     const location = useLocation();
 
 

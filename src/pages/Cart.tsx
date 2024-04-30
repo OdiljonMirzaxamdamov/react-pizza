@@ -1,14 +1,24 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import CartItem from "../components/cartItem";
+import CartItem from "../components/CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { clearItems } from "../redux/slices/cartSlice";
 import CartEmpty from "./Cart-empty";
 
-export const Cart = () => {
+
+interface RootState {
+    cart: {
+        items: {}[];
+        totalPrice: number;
+        totalItems: number;
+    };
+}
+
+
+const Cart: React.FC = () => {
     const dispatch = useDispatch();
-    const items = useSelector((state) => state.cart.items);
-    const { totalPrice, totalItems } = useSelector(state => state.cart)
+    const items = useSelector((state: RootState) => state.cart.items);
+    const { totalPrice, totalItems } = useSelector((state: RootState) => state.cart)
 
     const onClickClearItems = () => {
         if (window.confirm('Очистить корзину?')) {
@@ -58,7 +68,8 @@ export const Cart = () => {
                 </div>
                 <div className="content__items">
                     {
-                        items.map((item) => (<CartItem key={item.id} {...item} />))
+                        //надо будет потом пофиксить этот any
+                        items.map((item: any) => (<CartItem key={item.id} {...item} />))
                     }
                 </div>
                 <div className="cart__bottom">

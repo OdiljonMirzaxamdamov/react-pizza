@@ -14,14 +14,30 @@ import Pagination from "../components/Pagination";
 import HomeEmpty from "./Home-empty";
 
 
-export const Home = () => {
+interface RootStatePizza {
+    pizza: {
+        items: {}[];
+        status: string;
+    };
+}
+
+interface RootStateFilter {
+    filter: {
+        searchValue: string;
+        categoryId: number;
+        sort: { name: string; sortProperty: string; },
+        currentPage: number;
+    };
+}
+
+const Home: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const isSearch = React.useRef();
+    const isSearch = React.useRef<boolean>();
     const isMounted = React.useRef();
 
-    const { categoryId, sort, currentPage, searchValue } = useSelector((state) => state.filter);
-    const { items, status } = useSelector((state) => state.pizza);
+    const { categoryId, sort, currentPage, searchValue } = useSelector((state: RootStateFilter) => state.filter);
+    const { items, status } = useSelector((state: RootStatePizza) => state.pizza);
 
 
     const getPizzas = async () => {
@@ -30,6 +46,7 @@ export const Home = () => {
         const search = searchValue ? `&title=*${searchValue}` : '';
         const pagination = `page=${currentPage}&limit=4`;
 
+        //@ts-ignore
         dispatch(fetchPizzas({ category, sortBy, search, pagination }));
 
         window.scrollTo(0, 0);
@@ -78,7 +95,7 @@ export const Home = () => {
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
     // тут прикрутил Link для открытия попапа подробной инфы пиццы, это делается через реакт-роутек, хук useParams
     // здесь мы получаем "/pizza/:id" и передаём его в App.js, дальше от туда передаём id в FullPizza.jsx
-    const pizzas = items.map((obj) =>
+    const pizzas = items.map((obj: any) =>
         <Link key={obj.id} to={`/pizza/${obj.id}`}>
             <PizzaBlock {...obj} />
         </Link>);

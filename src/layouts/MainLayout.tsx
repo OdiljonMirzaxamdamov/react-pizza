@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 
 // в 19-уроке подключили Outlet компонент MainLayout, оно используется для больших проектов, тут мы делаем для примера
 
-function MainLayout() {
+const MainLayout: React.FC = () => {
     return (
         <div className="wrapper">
             <Header />

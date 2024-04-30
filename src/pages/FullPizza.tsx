@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 
 // через path="/pizza/:id" внутри App.js подключаем динамические ссылки
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
     const [pizza, setPizza] = React.useState<{
         imageUrl: string;
         title: string;

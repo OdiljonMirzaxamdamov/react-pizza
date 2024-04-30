@@ -4,16 +4,18 @@ import debounce from 'lodash.debounce';
 import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
-const Search = () => {
+const Search: React.FC = () => {
     const dispatch = useDispatch();
     const [value, setValue] = React.useState('')
-    const inputRes = React.useRef();
+    const inputRes = React.useRef<HTMLInputElement>(null);
 
 
     const clearSearch = () => {
         dispatch(setSearchValue(''));
         setValue('');
-        inputRes.current.focus();
+        inputRes.current?.focus();
+        // мы тут использовали тернарный оператор чтобы выполнить проверку на нулл
+        // также мы могли сделать через if (inputRes.current) {inputRes.current.focus()}
     }
 
 
@@ -25,7 +27,7 @@ const Search = () => {
     );
 
 
-    const onChangeInput = (event) => {
+    const onChangeInput = (event: any) => {
         setValue(event.target.value);
         updateSearchValue(event.target.value)
     }

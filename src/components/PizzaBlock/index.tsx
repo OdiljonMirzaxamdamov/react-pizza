@@ -1,17 +1,34 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {addItem} from "../../redux/slices/cartSlice";
+import { addItem } from "../../redux/slices/cartSlice";
 
 const typeNames = ["тонкое", "традиционное", "легендарное"];
 
-function PizzaBlock( {id, title, price, imageUrl, types, sizes} ) {
+// interface RootState {
+//     cart: {
+//         items: {id: number}[];
+//     };
+// }
+
+type PizzaBlockProps = {
+    id: string;
+    title: string;
+    price: number;
+    imageUrl: string;
+    types: number[];
+    sizes: number[];
+}
+
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ( {id, title, price, imageUrl, types, sizes} ) => {
     const dispatch = useDispatch();
     const [activePizzaType, setActivePizzaType] = React.useState(0);
     const [activePizzaSize, setActivePizzaSize] = React.useState(0);
 
-    const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //тут надо вместо state: any и  obj: any сделать что-то другое
+    const cartItem = useSelector((state: any) => state.cart.items.find((obj: any) => obj.id === id));
     const pizzaCount = cartItem ? cartItem.count : 0;
-
 
     const onClickAddCart = () => {
         const item = {

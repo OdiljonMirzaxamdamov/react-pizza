@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import logoNotFound from '../assets/img/sad-pizza.jpg'
 
 
-export const HomeEmpty = () => {
+const HomeEmpty: React.FC = () => {
 
     return (
         <div className="container--empty">
