@@ -32,12 +32,13 @@ const Sort: React.FC = () => {
     const dispatch = useDispatch();
     const sortType = useSelector((state: RootState) => state.filter.sort);
     //чтобы было понятно sortRef это на самом деле ссылка на какой-то див в данном примере
-    const sortRef = React.useRef(null);
+    //также Здесь null! сообщает TypeScript, что мы уверены, что null будет заменено на HTMLElement позже.
+    const sortRef = React.useRef(null!);
 
 
     React.useEffect(() => {
-       const handleClickOutside = (event: any) => {
-           if (event.target.offsetParent !== sortRef.current) {
+       const handleClickOutside = (event: MouseEvent) => {
+           if (event.target instanceof HTMLElement && event.target.offsetParent !== sortRef.current) {
                setOpen(false)
            }
        }
