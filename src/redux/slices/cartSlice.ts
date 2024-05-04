@@ -1,13 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+type CartItem = {
+    id: number;
+    title: string;
+    type: string;
+    size: number;
+    price: number;
+    count: number;
+    imageUrl: string;
+}
+
+interface CartSliceIState {
+    totalPrice: number,
+    totalItems: number,
+    items: CartItem[],
+}
+
+
+const initialState: CartSliceIState = {
     totalPrice: 0,
     totalItems: 0,
     items: [],
 }
 
 
-const total = (state) => {
+const total = (state: CartSliceIState) => {
     state.totalPrice = state.items.reduce((sum, obj) => {
         return (obj.price * obj.count) + sum;
     }, 0);

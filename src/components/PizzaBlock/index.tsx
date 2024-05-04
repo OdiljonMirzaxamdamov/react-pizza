@@ -1,6 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { addItem } from "../../redux/slices/cartSlice";
+import { RootState } from "../../redux/store";
 
 const typeNames = ["тонкое", "традиционное", "легендарное"];
 
@@ -27,7 +29,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ( {id, title, price, imageUrl, typ
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //тут надо вместо state: any и  obj: any сделать что-то другое
-    const cartItem = useSelector((state: any) => state.cart.items.find((obj: any) => obj.id === id));
+    const cartItem = useSelector((state: RootState) => state.cart.items.find((obj: any) => obj.id === id));
     const pizzaCount = cartItem ? cartItem.count : 0;
 
     const onClickAddCart = () => {
@@ -43,13 +45,12 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ( {id, title, price, imageUrl, typ
     }
 
 
+
     return (
         <div className="pizza-block">
-            <img
-                className="pizza-block__image"
-                src={imageUrl}
-                alt="Pizza"
-            />
+            <Link key={ id } to={`/pizza/${id}`}>
+                <img className="pizza-block__image" src={imageUrl} alt="Pizza"/>
+            </Link>
             <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                 <ul>

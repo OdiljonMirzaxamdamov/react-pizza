@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { setSortType } from "../redux/slices/filterSlice";
-
+import {RootState} from "../redux/store";
 
 type SortItem = {
     name: string;
@@ -17,20 +17,20 @@ export const sortList: SortItem[] = [
     {name: 'алфавиту (по убыванию)', sortProperty: '-title'},
 ]
 
-interface RootState {
-    filter: {
-        sort: {
-            name: string;
-            sortProperty: string;
-        },
-    };
-}
+// interface RootState {
+//     filter: {
+//         sort: {
+//             name: string;
+//             sortProperty: string;
+//         },
+//     };
+// }
 
 const Sort: React.FC = () => {
     const [open, setOpen] = React.useState(false);
 
     const dispatch = useDispatch();
-    const sortType = useSelector((state: RootState) => state.filter.sort);
+    const { sort } = useSelector((state: RootState) => state.filter);
     //чтобы было понятно sortRef это на самом деле ссылка на какой-то див в данном примере
     //также Здесь null! сообщает TypeScript, что мы уверены, что null будет заменено на HTMLElement позже.
     const sortRef = React.useRef(null!);
@@ -64,7 +64,7 @@ const Sort: React.FC = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setOpen(!open)}>{sortType.name}</span>
+                <span onClick={() => setOpen(!open)}>{sort.name}</span>
             </div>
             {open && (
                 <div className="sort__popup">
@@ -76,7 +76,7 @@ const Sort: React.FC = () => {
                                     dispatch(setSortType(obj));
                                     setOpen(!open);
                                 }}
-                                className={sortType.sortProperty === obj.sortProperty ? "active" : ''}>
+                                className={sort.sortProperty === obj.sortProperty ? "active" : ''}>
                                 {obj.name}
                             </li>
                         ))}

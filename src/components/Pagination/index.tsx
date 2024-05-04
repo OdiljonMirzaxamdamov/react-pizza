@@ -3,13 +3,14 @@ import ReactPaginate from "react-paginate";
 import styles from "./Pagination.module.scss";
 import { useSelector, useDispatch } from 'react-redux'
 import { setCurrentPage } from "../../redux/slices/filterSlice";
+import {RootState} from "../../redux/store";
 
 
-interface RootState {
-    filter: {
-        currentPage: number;
-    };
-}
+// interface RootState {
+//     filter: {
+//         currentPage: number;
+//     };
+// }
 
 
 const Pagination: React.FC = () => {

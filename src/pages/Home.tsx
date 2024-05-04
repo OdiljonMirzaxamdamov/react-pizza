@@ -1,10 +1,11 @@
 import React from "react";
 import qs from 'qs';
-import {Link, useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux'; // Это у нас подключение категорий и сортировки с помощью Редакса
 import { setFilters } from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
+import { RootState } from "../redux/store";
 
 import Categories from "../components/Categories";
 import Sort, {sortList} from "../components/Sort";
@@ -13,22 +14,21 @@ import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import HomeEmpty from "./Home-empty";
 
-
-interface RootStatePizza {
-    pizza: {
-        items: {}[];
-        status: string;
-    };
-}
-
-interface RootStateFilter {
-    filter: {
-        searchValue: string;
-        categoryId: number;
-        sort: { name: string; sortProperty: string; },
-        currentPage: number;
-    };
-}
+// interface RootStatePizza {
+//     pizza: {
+//         items: {}[];
+//         status: string;
+//     };
+// }
+//
+// interface RootStateFilter {
+//     filter: {
+//         searchValue: string;
+//         categoryId: number;
+//         sort: { name: string; sortProperty: string; },
+//         currentPage: number;
+//     };
+// }
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -36,8 +36,8 @@ const Home: React.FC = () => {
     const isSearch = React.useRef<boolean>();
     const isMounted = React.useRef();
 
-    const { categoryId, sort, currentPage, searchValue } = useSelector((state: RootStateFilter) => state.filter);
-    const { items, status } = useSelector((state: RootStatePizza) => state.pizza);
+    const { categoryId, sort, currentPage, searchValue } = useSelector((state: RootState) => state.filter);
+    const { items, status } = useSelector((state: RootState) => state.pizza);
 
 
     const getPizzas = async () => {
@@ -95,10 +95,7 @@ const Home: React.FC = () => {
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
     // тут прикрутил Link для открытия попапа подробной инфы пиццы, это делается через реакт-роутек, хук useParams
     // здесь мы получаем "/pizza/:id" и передаём его в App.js, дальше от туда передаём id в FullPizza.jsx
-    const pizzas = items.map((obj: any) =>
-        <Link key={obj.id} to={`/pizza/${obj.id}`}>
-            <PizzaBlock {...obj} />
-        </Link>);
+    const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 
     return (
         <div className="container">
