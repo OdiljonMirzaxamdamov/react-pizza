@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from 'react-redux'
-import { addItem, minusItem, removeItem } from "../redux/slices/cartSlice";
+import { addItem, minusItem, removeItem, CartItemSlice } from "../redux/slices/cartSlice";
 
 //создаём свой собственный тип CartItemProps
 type CartItemProps = {
@@ -17,16 +17,17 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count
     const dispatch = useDispatch()
 
     const onClickPlus = () => {
-        dispatch(addItem({ id }))
+        //тут добавили as CartItemSlice чтобы TS понимал что он должен получить в качестве id
+        dispatch(addItem({ id } as CartItemSlice))
     }
 
     const onClickMinus = () => {
-        dispatch(minusItem({ id }))
+        dispatch(minusItem({ id } as CartItemSlice))
     }
 
     const onClickRemove = () => {
         if (window.confirm('Ты действительно хочешь удалить этот тип пиццы?')) {
-            dispatch(removeItem({ id }))
+            dispatch(removeItem({ id } as CartItemSlice))
         }
     }
 

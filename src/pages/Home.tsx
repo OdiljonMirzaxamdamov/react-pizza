@@ -3,32 +3,18 @@ import qs from 'qs';
 import { useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux'; // Это у нас подключение категорий и сортировки с помощью Редакса
-import { setFilters } from "../redux/slices/filterSlice";
+import { FilterSliceState, setFilters} from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
 import { RootState } from "../redux/store";
 
 import Categories from "../components/Categories";
-import Sort, {sortList} from "../components/Sort";
+import Sort, { sortList } from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import HomeEmpty from "./Home-empty";
 
-// interface RootStatePizza {
-//     pizza: {
-//         items: {}[];
-//         status: string;
-//     };
-// }
-//
-// interface RootStateFilter {
-//     filter: {
-//         searchValue: string;
-//         categoryId: number;
-//         sort: { name: string; sortProperty: string; },
-//         currentPage: number;
-//     };
-// }
+
 
 const Home: React.FC = () => {
     const navigate = useNavigate();
@@ -38,7 +24,7 @@ const Home: React.FC = () => {
 
     const { categoryId, sort, currentPage, searchValue } = useSelector((state: RootState) => state.filter);
     const { items, status } = useSelector((state: RootState) => state.pizza);
-
+    // console.log(items)
 
     const getPizzas = async () => {
         const category = categoryId > 0 ? `&category=${categoryId}` : '';
@@ -68,7 +54,7 @@ const Home: React.FC = () => {
         }
 
         if (window.location.search) {
-            fetchPizzas();
+            fetchPizzas({});
         };
     }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
@@ -82,14 +68,17 @@ const Home: React.FC = () => {
     //!!!!!!! Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
     React.useEffect(() => {
         if (window.location.search) {
-            const params = qs.parse(window.location.search.substring(1));
-            const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty);
+            //тут мы немного обманываем TS, код сначало переводим в unknown, а потом его в FilterSliceState.
+            const params = (qs.parse(window.location.search.substring(1)) as unknown) as FilterSliceState;
+            //тут добавился || sortList[0], чтобы исключить undefined
+            const sort = sortList.find((obj) => obj.sortProperty === params.sort.sortProperty) || sortList[0];
 
-            dispatch(setFilters({...params, sort,}),);
+            dispatch(setFilters({...params, sort}));
 
             isSearch.current = true;
         }
     }, []);
+
 
 
     const skeleton = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);

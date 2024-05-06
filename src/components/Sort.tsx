@@ -1,30 +1,18 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { setSortType } from "../redux/slices/filterSlice";
-import {RootState} from "../redux/store";
+import { setSortType, SortPropertyEnam } from "../redux/slices/filterSlice";
+import { RootState } from "../redux/store";
 
-type SortItem = {
-    name: string;
-    sortProperty: string;
-}
 
-export const sortList: SortItem[] = [
-    {name: 'популярности (по возрастанию)', sortProperty: 'rating'},
-    {name: 'популярности (по убыванию)', sortProperty: '-rating'},
-    {name: 'цене (по возрастанию)', sortProperty: 'price'},
-    {name: 'цене (по убыванию)', sortProperty: '-price'},
-    {name: 'алфавиту (по возрастанию)', sortProperty: 'title'},
-    {name: 'алфавиту (по убыванию)', sortProperty: '-title'},
+export const sortList = [
+    {name: 'популярности (по возрастанию)', sortProperty: SortPropertyEnam.RATING_DESC},
+    {name: 'популярности (по убыванию)', sortProperty: SortPropertyEnam.RATING_ASC},
+    {name: 'цене (по возрастанию)', sortProperty: SortPropertyEnam.PRICE_DESC},
+    {name: 'цене (по убыванию)', sortProperty: SortPropertyEnam.PRICE_ASC},
+    {name: 'алфавиту (по возрастанию)', sortProperty: SortPropertyEnam.TITLE_DESC},
+    {name: 'алфавиту (по убыванию)', sortProperty: SortPropertyEnam.TITLE_ASC},
 ]
 
-// interface RootState {
-//     filter: {
-//         sort: {
-//             name: string;
-//             sortProperty: string;
-//         },
-//     };
-// }
 
 const Sort: React.FC = () => {
     const [open, setOpen] = React.useState(false);
