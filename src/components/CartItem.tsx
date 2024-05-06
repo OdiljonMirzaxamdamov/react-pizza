@@ -2,6 +2,10 @@ import React from "react";
 import { useDispatch } from 'react-redux'
 import { addItem, minusItem, removeItem, CartItemSlice } from "../redux/slices/cartSlice";
 
+// конкретно тут библиотека clsx используется для того, чтобы добавить класс при выполнении определенных условия
+// в нашем случае когда count = 1, то добавляется класс "cart__item-count-minus-disabled" внутрь className.
+import { clsx } from "clsx";
+
 //создаём свой собственный тип CartItemProps
 type CartItemProps = {
     id: number;
@@ -45,7 +49,12 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count
                 <p>{type}, {size} см.</p>
             </div>
             <div className="cart__item-count">
-                <div onClick={onClickMinus} className="button button--outline button--circle cart__item-count-minus">
+                <button disabled={count === 1}
+                        onClick={onClickMinus}
+                        className={clsx(
+                            "button button--outline button--circle cart__item-count-minus",
+                            {'cart__item-count-minus--disabled' : count === 1}
+                        )}>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -56,7 +65,7 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count
                             fill="#EB5A1E"/>
                     </svg>
 
-                </div>
+                </button>
                 <b>{count}</b>
                 <div onClick={onClickPlus} className="button button--outline button--circle cart__item-count-plus">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"

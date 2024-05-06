@@ -1,4 +1,9 @@
 {
+  "//": [
+    "при установке @types/lodash.debounce и slcx возникла ошибка конфликт версий пакетов TypeScript",
+    "проблему решили с помошью флага --force",
+    "пример: npm install --force @types/lodash.debounce или clsx"
+  ],
   "name": "react-pizza-v2",
   "version": "0.1.0",
   "private": true,
@@ -13,6 +18,7 @@
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "axios": "^1.6.8",
+    "clsx": "^2.1.1",
     "lodash.debounce": "^4.0.8",
     "qs": "^6.12.1",
     "react": "^18.2.0",

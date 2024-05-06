@@ -11,6 +11,7 @@ export const store = configureStore ({
     },
 })
 
-
+//RootState возвращает фактическую глобальную типизацию для reduce и внутренних файлов,
+// это мы можем использовать в компонентах где есть useSelector => state, т.к. state просит типизацию
 export type RootState = ReturnType<typeof store.getState>
 
