@@ -23,6 +23,16 @@ const initialState: CartSliceState = {
     items: [],
 }
 
+const defaultCartItem: CartItemSlice = {
+    id: 0,
+    title: '',
+    type: '',
+    size: 0,
+    price: 0,
+    imageUrl: '',
+    count: 0,
+}
+
 
 const total = (state: CartSliceState) => {
     state.totalPrice = state.items.reduce((sum, obj) => {
@@ -39,20 +49,24 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addItem: (state, action: PayloadAction<CartItemSlice>) => {
+        // Раньше было action: PayloadAction<CartItemSlice>
+        // потом Ильюха подсказал сделать action: PayloadAction<Pick<CartItemSlice, 'id'>>
+        // Pick даёт возможность выбрать конкретный элемент из объекта.
+        // и это позволило удалить CartItemSlice из CartItem - dispatch(addItem({ id }) as CartItemSlice)
+        addItem: (state, action: PayloadAction<Pick<CartItemSlice, 'id'>>) => {
             const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
             if (findItem) {
                 findItem.count++;
             } else  {
-                state.items.push({...action.payload, count: 1})
+                state.items.push({...defaultCartItem, ...action.payload, count: 1})
             }
 
             total(state);
         },
 
 
-        minusItem: (state, action: PayloadAction<CartItemSlice>) => {
+        minusItem: (state, action: PayloadAction<Pick<CartItemSlice, 'id'>>) => {
             const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
             if (findItem) {
@@ -63,7 +77,7 @@ const cartSlice = createSlice({
         },
 
 
-        removeItem: (state, action: PayloadAction<CartItemSlice>) => {
+        removeItem: (state, action: PayloadAction<Pick<CartItemSlice, 'id'>>) => {
             state.items = state.items.filter((obj) => obj.id !== action.payload.id)
 
             total(state);

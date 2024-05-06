@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from 'react-redux'
-import { addItem, minusItem, removeItem, CartItemSlice } from "../redux/slices/cartSlice";
+import { addItem, minusItem, removeItem } from "../redux/slices/cartSlice";
 
 // конкретно тут библиотека clsx используется для того, чтобы добавить класс при выполнении определенных условия
 // в нашем случае когда count = 1, то добавляется класс "cart__item-count-minus-disabled" внутрь className.
@@ -21,17 +21,18 @@ const CartItem: React.FC<CartItemProps> = ({ id, title, type, size, price, count
     const dispatch = useDispatch()
 
     const onClickPlus = () => {
-        //тут добавили as CartItemSlice чтобы TS понимал что он должен получить в качестве id
-        dispatch(addItem({ id } as CartItemSlice))
+        //тут добавили "addItem({ id }) as CartItemSlice" чтобы TS понимал что он должен получить в качестве id
+        //но после подсказки Ильюхи и корректировки action в Slice, я удалил as CartItemSlice
+        dispatch(addItem({ id }))
     }
 
     const onClickMinus = () => {
-        dispatch(minusItem({ id } as CartItemSlice))
+        dispatch(minusItem({ id }))
     }
 
     const onClickRemove = () => {
         if (window.confirm('Ты действительно хочешь удалить этот тип пиццы?')) {
-            dispatch(removeItem({ id } as CartItemSlice))
+            dispatch(removeItem({ id }))
         }
     }
 

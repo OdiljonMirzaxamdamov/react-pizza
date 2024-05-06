@@ -7,7 +7,7 @@ import { setSearchValue } from "../../redux/slices/filterSlice";
 const Search: React.FC = () => {
     const dispatch = useDispatch();
     const [value, setValue] = React.useState<string>('')
-    const inputRes = React.useRef<HTMLInputElement>(null!);
+    const inputRes = React.useRef<HTMLInputElement | null>(null);
         //Здесь null! сообщает TypeScript, что вы уверены, что null будет заменено на HTMLInputElement позже.
 
 

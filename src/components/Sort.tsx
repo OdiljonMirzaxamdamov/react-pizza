@@ -1,7 +1,7 @@
 import React from "react";
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setSortType, SortPropertyEnam } from "../redux/slices/filterSlice";
-import { RootState } from "../redux/store";
+import { SortTs } from "../redux/slices/filterSlice";
 
 
 export const sortList = [
@@ -13,15 +13,25 @@ export const sortList = [
     {name: 'алфавиту (по убыванию)', sortProperty: SortPropertyEnam.TITLE_ASC},
 ]
 
+type SortPopupProps = {
+    sort: SortTs
+}
 
-const Sort: React.FC = () => {
+const Sort: React.FC<SortPopupProps> = React.memo(({ sort }) => {
+    const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
 
-    const dispatch = useDispatch();
-    const { sort } = useSelector((state: RootState) => state.filter);
+    //Короче мы удалили const { sort } = useSelector((state: RootState) => state.filter);
+    // и значение sort начали передавать во внутрь с помощью callBack через Home с помощью Props {sort}
+    // Также весь код обернули в React.memo(), это мы сделали чтобы остановить лишние перерисовки.
+    // React.memo() запрещает перерисовку, если конкретно Props.sort не меняется, значит он этот компонент перерисовать не будет.
+    // Теперь когда мы меняем категорию или вводим что-либо в поиске, компонент сортировки не перерисовываются.
+    // Для проверки, изменяется какой элемент можно использовать { useWhyDidYouUpdate } from "ahooks";
+
+
     //чтобы было понятно sortRef это на самом деле ссылка на какой-то див в данном примере
     //также Здесь null! сообщает TypeScript, что мы уверены, что null будет заменено на HTMLElement позже.
-    const sortRef = React.useRef(null!);
+    const sortRef = React.useRef<HTMLDivElement>(null!);
 
 
     React.useEffect(() => {
@@ -74,6 +84,6 @@ const Sort: React.FC = () => {
 
         </div>
     )
-}
+})
 
 export default Sort;

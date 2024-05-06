@@ -10,7 +10,7 @@ export enum SortPropertyEnam {
     PRICE_ASC = '-price',
 }
 
-type SortTs = {
+export type SortTs = {
     name: string;
     sortProperty: SortPropertyEnam;
 }

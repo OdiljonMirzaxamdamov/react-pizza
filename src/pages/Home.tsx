@@ -71,7 +71,7 @@ const Home: React.FC = () => {
             //тут мы немного обманываем TS, код сначало переводим в unknown, а потом его в FilterSliceState.
             const params = (qs.parse(window.location.search.substring(1)) as unknown) as FilterSliceState;
             //тут добавился || sortList[0], чтобы исключить undefined
-            const sort = sortList.find((obj) => obj.sortProperty === params.sort.sortProperty) || sortList[0];
+            const sort = sortList.find((obj) => obj.sortProperty === params.sort.sortProperty) ?? sortList[0];
 
             dispatch(setFilters({...params, sort}));
 
@@ -89,8 +89,8 @@ const Home: React.FC = () => {
     return (
         <div className="container">
             <div className="content__top">
-                <Categories />
-                <Sort />
+                <Categories categoryId={categoryId}/>
+                <Sort sort={sort}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             {status === 'error' ? <HomeEmpty /> : <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>}
