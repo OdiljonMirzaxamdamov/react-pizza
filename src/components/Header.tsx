@@ -8,8 +8,20 @@ import logoSvg from '../assets/img/pizza-logo.svg'
 
 
 const Header: React.FC = () => {
-    const { totalPrice, totalItems } = useSelector((state: RootState) => state.cart)
+    const { items, totalPrice, totalItems } = useSelector((state: RootState) => state.cart)
     const location = useLocation();
+    const isMounted = React.useRef(false);
+
+    //тут мы начали создавать localStorage, чтобы при обновлении страницы, данные с корзины не очищались
+    //тут React.useEffect следит за totalPrice, totalItems и при изменении сохраняется items в localStorage
+    //флаг isMounted нужен, чтобы при первом рендере ничего не сохранял, а только со второго начинал.
+    React.useEffect(() => {
+        if (isMounted.current) {
+            const json = JSON.stringify(items);
+            localStorage.setItem('cart', json);
+        }
+        isMounted.current = true;
+    }, [items])
 
 
     return (

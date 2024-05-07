@@ -17,10 +17,39 @@ interface CartSliceState {
 }
 
 
+//внутри Header мы передали данные в localStorage, а тут мы как раз вытаскиваем данные из localStorage
+//и используем их чтобы при обновлении страницы, данные не очищались
+const getCartFromLS = () => {
+    //тут вытаскиваем данные из localStorage
+    const data = localStorage.getItem('cart');
+
+    //тут проверяем для TS, если данные(data) есть, значит парсим JSON файл или же в обратном случаем передаем пустой массив
+    const items = data ? JSON.parse(data) : [];
+
+    //тут обсчитываем totalPrice в случае, если внутри localStorage есть данные
+    const totalPrice = items.reduce((sum: number, obj: CartItemSlice) => {
+        return (obj.price * obj.count) + sum;
+    }, 0);
+
+    //тут обсчитываем totalItems в случае, если внутри localStorage есть данные
+    const totalItems = items.reduce((sum: number, obj: CartItemSlice) => {
+        return obj.count + sum;
+    }, 0);
+
+    //полученные данные передаем в initialState, чтобы они сразу отображались при обновлении страницы
+    return {
+        items,
+        totalPrice,
+        totalItems
+    }
+}
+
+
+//используем полученные данные с localStorage
 const initialState: CartSliceState = {
-    totalPrice: 0,
-    totalItems: 0,
-    items: [],
+    totalPrice: getCartFromLS().totalPrice,
+    totalItems: getCartFromLS().totalItems,
+    items: getCartFromLS().items,
 }
 
 const defaultCartItem: CartItemSlice = {
