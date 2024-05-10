@@ -1,20 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearItems } from "../redux/slices/cartSlice";
 import { RootState } from "../redux/store";
 
-import CartItem from "../components/CartItem";
-import CartEmpty from "./Cart-empty";
+import { clearItems } from "../redux/slices/cartSlice";
 
-
-// interface RootState {
-//     cart: {
-//         items: {}[];
-//         totalPrice: number;
-//         totalItems: number;
-//     };
-// }
+// Это мы сделали ReExport компонентов через один файл, для более легкой читабельности.
+import { CartItem, CartEmpty } from "../components";
 
 
 const Cart: React.FC = () => {

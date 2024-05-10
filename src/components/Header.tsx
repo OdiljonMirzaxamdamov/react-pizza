@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
-import Search from "./Search";
+
+import { Search } from "../components";
 import logoSvg from '../assets/img/pizza-logo.svg'
 
 

@@ -7,12 +7,10 @@ import { FilterSliceState, setFilters} from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
 import { RootState } from "../redux/store";
 
-import Categories from "../components/Categories";
-import Sort, { sortList } from "../components/Sort";
-import Skeleton from "../components/PizzaBlock/skeleton";
-import PizzaBlock from "../components/PizzaBlock";
-import Pagination from "../components/Pagination";
-import HomeEmpty from "./Home-empty";
+
+// Это мы сделали ReExport компонентов через один файл, для более легкой читабельности.
+import { Categories, Sort, Skeleton, PizzaBlock, Pagination, HomeEmpty } from "../components";
+import { sortList } from "../components/Sort";
 
 
 
